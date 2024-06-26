@@ -45,7 +45,6 @@ public class DestinoControlador {
         servico.deletarDestino(id);
     }
 
-    // Outros endpoints conforme especificado
+    
 }
 
-//Classe controladora que define os endpoints.
