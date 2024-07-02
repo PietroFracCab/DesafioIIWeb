@@ -5,29 +5,38 @@ import com.desenvolvimentoWeb.desafioII.repository.DestinoRepositorio;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class DestinoServico {
 
-    private final DestinoRepositorio repositorio = new DestinoRepositorio();
+    @Autowired
+    private final DestinoRepositorio repositorio;
+
+    public DestinoServico(DestinoRepositorio repositorio) {
+        this.repositorio = repositorio;
+    }
 
     public Destino adicionarDestino(Destino destino) {
-        return repositorio.adicionar(destino);
+        return repositorio.save(destino);
     }
 
     public List<Destino> listarTodos() {
-        return repositorio.listar();
+        return repositorio.findAll();
     }
 
     public Destino buscarPorId(Long id) {
-        Optional<Destino> destino = repositorio.buscarPorId(id);
-        if (destino.isPresent()) {
-            return destino.get();
-        } else {
-            throw new RuntimeException("Destino não encontrado");
-        }
+        Optional<Destino> destino = repositorio.findById(id);
+        return destino.orElseThrow(() -> new RuntimeException("Destino não encontrado"));
     }
 
     public Destino atualizarDestino(Long id, Destino destinoAtualizado) {
-        return repositorio.atualizar(id, destinoAtualizado);
+        if (!repositorio.existsById(id)) {
+            throw new RuntimeException("Destino não encontrado");
+        }
+        destinoAtualizado.setId(id);
+        return repositorio.save(destinoAtualizado);
     }
 
     public Destino atualizarAvaliacao(Long id, double novaAvaliacao) {
@@ -35,11 +44,11 @@ public class DestinoServico {
             throw new IllegalArgumentException("A avaliação deve ser entre 1 e 10.");
         }
         Destino destino = buscarPorId(id);
-        destino.avaliacao(novaAvaliacao);
+        destino.setAvaliacao(novaAvaliacao);
         return repositorio.atualizar(id, destino);
     }
 
     public void deletarDestino(Long id) {
-        repositorio.deletar(id);
+        repositorio.deleteById(id);
     }
 }

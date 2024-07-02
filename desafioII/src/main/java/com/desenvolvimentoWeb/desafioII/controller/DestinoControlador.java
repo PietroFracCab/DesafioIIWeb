@@ -1,7 +1,10 @@
 package com.desenvolvimentoWeb.desafioII.controller;
 
 import com.desenvolvimentoWeb.desafioII.model.Destino;
+import com.desenvolvimentoWeb.desafioII.repository.DestinoRepositorio;
 import com.desenvolvimentoWeb.desafioII.service.DestinoServico;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +14,12 @@ import java.util.List;
 @RequestMapping("/api/destinos")
 public class DestinoControlador {
 
-    private final DestinoServico servico = new DestinoServico();
+    private final DestinoServico servico;
+
+    @Autowired
+    public DestinoControlador(DestinoRepositorio repositorio) {
+        this.servico = new DestinoServico(repositorio);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

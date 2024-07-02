@@ -1,34 +1,59 @@
 package com.desenvolvimentoWeb.desafioII.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Destino {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome; //alterar
-    private String localizacao; //alterar
-    private String descricao; //alterar
-    private double avaliacao; //alterar
-    
-    public void avaliacao(double novaAvaliacao) {
-        this.avaliacao = novaAvaliacao;
+    private String nome;
+    private String localizacao;
+    private String descricao;
+    private double avaliacao;
+
+    // Getters
+    public Long getId() {
+        return id;
     }
-    public void setId(long id) {
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public double getAvaliacao() {
+        return avaliacao;
+    }
+
+    // Setters
+    public void setId(Long id) {
         this.id = id;
     }
-    public long getId() {
-        return this.id;
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    private static List<Destino> destinos = new ArrayList<>(); //redundante?
-        // Método para adicionar destinos à lista (apenas para exemplo)
-        public static void adicionarDestino(Destino destino) {
-            destinos.add(destino);
-    }
-    
-    // Método para listar todos os destinos (redundante?)
-    public static List<Destino> listarTodos() {
-        return destinos;
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setAvaliacao(double avaliacao) {
+        this.avaliacao = avaliacao;
+    }
 }
